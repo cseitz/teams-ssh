@@ -3,4 +3,4 @@
 USER=$1
 
 # Remove user from sudo
-deluser $USER sudo
+#deluser $USER sudo
