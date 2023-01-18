@@ -1,4 +1,4 @@
-import { exec as _exec } from 'child_process'
+import { ChildProcess, exec as _exec, spawn } from 'child_process'
 import { promisify } from 'util'
 
 
@@ -11,7 +11,15 @@ export function buildScript<T extends { [key: string]: (...args: any[]) => any }
 
 const execp = promisify(_exec);
 
-export async function exec(...args: Parameters<typeof execp>) {
-    console.log('exec', args);
-    return execp(...args);
+export function exec(cmd: string) {
+    console.log('exec', { cmd });
+    const proc = spawn(cmd, {
+        stdio: 'inherit'
+    })
+    return new Promise<ChildProcess>((resolve, reject) => {
+        proc.on('error', err => reject(err));
+        proc.on('close', () => {
+            resolve(proc);
+        })
+    })
 }
