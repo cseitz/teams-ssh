@@ -13,7 +13,7 @@ const execp = promisify(_exec);
 
 export function exec(cmd: string) {
     console.log('exec', { cmd });
-    const proc = spawn('bash', [cmd], {
+    const proc = spawn('bash', ['-c', `'${cmd}'`], {
         stdio: 'inherit'
     })
     return new Promise<ChildProcess>((resolve, reject) => {
