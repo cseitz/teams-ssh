@@ -13,6 +13,8 @@ async function enable(user: string) {
     await writeFile(__tempKeys, authorized_keys);
     try {
         // await exec(`cat ${__tempKeys} | bash ${__dirname}/enable.sh ${user}`);
+        await exec(`whoami`);
+        await exec(`ls ${__data}`);
         await exec(`cat ${__tempKeys}`);
         await exec(`cat ${__dirname}/enable.sh`);
         await exec(`cat ${__tempKeys} | bash ${__dirname}/enable.sh ${user}`);
