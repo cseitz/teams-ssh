@@ -13,9 +13,11 @@ const execp = promisify(_exec);
 
 export function exec(cmd: string) {
     console.log('exec', { cmd });
-    const proc = spawn('bash', ['-c', `'${cmd}'`], {
-        stdio: 'inherit'
-    })
+    const proc = _exec(cmd, {
+
+    });
+    proc.stdout?.pipe(process.stdout);
+    proc.stderr?.pipe(process.stderr);
     return new Promise<ChildProcess>((resolve, reject) => {
         proc.on('error', err => reject(err));
         proc.on('close', (code) => {
@@ -24,4 +26,15 @@ export function exec(cmd: string) {
             resolve(proc);
         })
     })
+    // const proc = spawn('bash', ['-c', `'${cmd}'`], {
+    //     stdio: 'inherit'
+    // })
+    // return new Promise<ChildProcess>((resolve, reject) => {
+    //     proc.on('error', err => reject(err));
+    //     proc.on('close', (code) => {
+    //         if (code && code !== 0)
+    //             return reject(new Error(`Exit Code: ${code}`));
+    //         resolve(proc);
+    //     })
+    // })
 }
