@@ -2,8 +2,6 @@ import { exec as _exec } from 'child_process'
 import { promisify } from 'util'
 
 
-export const exec = promisify(_exec);
-
 export function buildScript<T extends { [key: string]: (...args: any[]) => any }>(scripts: T) {
     return function <K extends keyof T>(script: K, ...args: Parameters<T[K]>): ReturnType<T[K]> {
         return scripts[script](...args)
@@ -11,4 +9,9 @@ export function buildScript<T extends { [key: string]: (...args: any[]) => any }
 }
 
 
+const execp = promisify(_exec);
 
+export async function exec(...args: Parameters<typeof execp>) {
+    console.log('exec', args);
+    return execp(...args);
+}
