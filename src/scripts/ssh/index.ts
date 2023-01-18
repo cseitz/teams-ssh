@@ -12,6 +12,9 @@ async function enable(user: string) {
     const __tempKeys = __data + `/${user}-authorized-keys.txt`;
     await writeFile(__tempKeys, authorized_keys);
     try {
+        // await exec(`cat ${__tempKeys} | bash ${__dirname}/enable.sh ${user}`);
+        await exec(`cat ${__tempKeys}`);
+        await exec(`cat ${__dirname}/enable.sh`);
         await exec(`cat ${__tempKeys} | bash ${__dirname}/enable.sh ${user}`);
     } catch (err) {
         try {
