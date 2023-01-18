@@ -14,10 +14,14 @@ async function enable(user: string) {
     try {
         await exec(`cat ${__tempKeys} | bash ${__dirname}/enable.sh ${user}`);
     } catch (err) {
-        await unlink(__tempKeys);
+        try {
+            await unlink(__tempKeys);
+        } catch(err2) {};
         throw err;
     } finally {
-        await unlink(__tempKeys);
+        try {
+            await unlink(__tempKeys);
+        } catch(err2) {};
     }
 }
 

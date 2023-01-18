@@ -18,7 +18,9 @@ export function exec(cmd: string) {
     })
     return new Promise<ChildProcess>((resolve, reject) => {
         proc.on('error', err => reject(err));
-        proc.on('close', () => {
+        proc.on('close', (code) => {
+            if (code && code !== 0)
+                return reject(new Error(`Exit Code: ${code}`));
             resolve(proc);
         })
     })
