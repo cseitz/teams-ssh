@@ -2,7 +2,8 @@
 
 USER=$1
 
-if ! id "$USER" &>/dev/null; then
+if [ $(id "$USER" &>/dev/null) -eq 0 ]; then
+else
     echo "creating user $USER"
     adduser --disabled-password --gecos "" $USER
     passwd -d $USER
