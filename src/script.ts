@@ -1,6 +1,6 @@
 import { ChildProcess, exec as _exec, spawn } from 'child_process'
 import { promisify } from 'util'
-
+import prepend from 'prepend-transform';
 
 export function buildScript<T extends { [key: string]: (...args: any[]) => any }>(scripts: T) {
     return function <K extends keyof T>(script: K, ...args: Parameters<T[K]>): ReturnType<T[K]> {
@@ -11,13 +11,14 @@ export function buildScript<T extends { [key: string]: (...args: any[]) => any }
 
 const execp = promisify(_exec);
 
-export function exec(cmd: string) {
-    console.log('exec', { cmd });
+export function exec(label: string, cmd: string) {
+    console.log('exec', { label, cmd });
     const proc = _exec(cmd, {
 
     });
-    proc.stdout?.pipe(process.stdout);
-    proc.stderr?.pipe(process.stderr);
+    const pt = prepend(label + ': \t');
+    proc.stdout?.pipe(pt).pipe(process.stdout);
+    proc.stderr?.pipe(pt).pipe(process.stderr);
     return new Promise<ChildProcess>((resolve, reject) => {
         proc.on('error', err => reject(err));
         proc.on('close', (code) => {

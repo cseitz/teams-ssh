@@ -5,15 +5,23 @@ import { getMembersDelta } from './src/teams';
 
 async function updateSSH() {
     const { added, removed, members, commit } = await getMembersDelta('ssh');
-    await Promise.all(removed.map(o => ssh('disable', o.login)));
-    await Promise.all(added.map(o => ssh('enable', o.login)));
+    for (const member of removed) {
+        await ssh('disable', member.login.toLowerCase());
+    }
+    for (const member of added) {
+        await ssh('enable', member.login.toLowerCase());
+    }
     await commit();
 }
 
 async function updateSudo() {
     const { added, removed, members, commit } = await getMembersDelta('sudo');
-    await Promise.all(removed.map(o => sudo('disable', o.login)));
-    await Promise.all(added.map(o => sudo('enable', o.login)));
+    for (const member of removed) {
+        await sudo('disable', member.login.toLowerCase());
+    }
+    for (const member of added) {
+        await sudo('enable', member.login.toLowerCase());
+    }
     await commit();
 }
 

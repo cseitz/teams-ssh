@@ -6,12 +6,12 @@ import { unlink, writeFile } from 'fs/promises';
 
 async function enable(user: string) {
     user = user.toLowerCase();
-    await exec(`bash ${__dirname}/enable.sh ${user}`);
+    await exec(`sudo.enable(${user})`, `bash ${__dirname}/enable.sh ${user}`);
 }
 
 async function disable(user: string) {
     user = user.toLowerCase();
-    await exec(`bash ${__dirname}/disable.sh ${user}`);
+    await exec(`sudo.disable(${user})`, `bash ${__dirname}/disable.sh ${user}`);
 }
 
 
