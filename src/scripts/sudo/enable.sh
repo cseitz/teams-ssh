@@ -2,5 +2,5 @@
 
 USER=$1
 
-# Remove user from sudo
+# Add user to sudo
 usermod -aG sudo $USER

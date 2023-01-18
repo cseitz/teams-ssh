@@ -2,5 +2,5 @@
 
 USER=$1
 
-# Add user to sudo
+# Remove user from sudo
 deluser $USER sudo
