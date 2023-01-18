@@ -8,3 +8,6 @@ npm -v
 ```
 
 node
+
+todo: sshd banner
+
