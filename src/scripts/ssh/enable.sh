@@ -2,7 +2,9 @@
 
 USER=$1
 
-if [ $(id "$USER" &>/dev/null) -eq 0 ]; then
+id "$USER" &>/dev/null
+if [ "$?" -eq "0" ] then
+    echo "user $USER already exists"
 else
     echo "creating user $USER"
     adduser --disabled-password --gecos "" $USER
