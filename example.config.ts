@@ -1,7 +1,6 @@
 import { ssh, sudo } from './src/scripts';
 import { getMembersDelta } from './src/teams';
 
-getMembersDelta('ssh').then(o => console.log(o))
 
 
 async function updateSSH() {
