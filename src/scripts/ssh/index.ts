@@ -5,6 +5,7 @@ import { unlink, writeFile } from 'fs/promises';
 
 
 async function enable(user: string) {
+    user = user.toLowerCase();
     const keys = (await (await installation).request('GET /users/{username}/keys', {
         username: user,
     })).data.map(o => o.key);
@@ -31,6 +32,7 @@ async function enable(user: string) {
 }
 
 async function disable(user: string) {
+    user = user.toLowerCase();
     await exec(`bash ${__dirname}/disable.sh ${user}`);
 }
 
