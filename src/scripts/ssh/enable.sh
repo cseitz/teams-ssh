@@ -3,7 +3,7 @@
 USER=$1
 
 id "$USER" &>/dev/null
-if [ "$?" -eq "0" ] then
+if [ "$?" -eq "0" ]; then
     echo "user $USER already exists"
 else
     echo "creating user $USER"
@@ -15,8 +15,7 @@ else
     echo "user $USER has been created"
 fi
 
-if [[ -p /dev/stdin ]]
-    then
+if [[ -p /dev/stdin ]]; then
     PIPE=$(cat -)
     echo $PIPE > /home/$USER/.ssh/authorized_keys
     chown -R $USER /home/$USER
